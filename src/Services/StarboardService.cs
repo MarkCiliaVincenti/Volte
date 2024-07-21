@@ -1,3 +1,4 @@
+using AsyncKeyedLock;
 using System.Net;
 
 namespace Volte.Services;
@@ -18,7 +19,7 @@ public sealed class StarboardService : VolteService
     
     // Ensures starboard message creations don't happen twice, and edits are atomic. Also ensures dictionary updates
     // don't happen at the same time.
-    private readonly AsyncDuplicateLock<ulong> _starboardReadWriteLock = new();
+    private readonly AsyncKeyedLocker<ulong> _starboardReadWriteLock = new();
 
     /// <summary>
     /// Verifies if a given reaction operation is for a valid starboard reaction (star emoji, not DM, not made by
